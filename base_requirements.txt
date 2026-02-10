@@ -1,1 +1,7 @@
-
+numpy
+networkx
+numba
+matplotlib
+icecream
+scipy
+tqdm
