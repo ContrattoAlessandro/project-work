@@ -50,7 +50,7 @@ def optimal_k(dist, gold, alpha, beta):
     if k < 1: 
         k = 1
     
-    # Compare the actual costs of the two integers closest to k* (k and k+1) to find the discrete global minimum.
+    # Compare the actual costs of the two integers closest to k* (k and k+1) to find the discrete global minimum
     
     # Cost for k trips
     c1 = k * (2.0 * dist + (alpha * dist * (gold / k)) ** beta)
@@ -91,14 +91,14 @@ def split(individual, dist_matrix, gold, alpha, beta, window_size):
             cost_accum += d_uv + (alpha * d_uv * load) ** beta
             # Item collection
             load += gold[v]
-            # Hypothetical return cost v -> Hub
+            # Return cost v -> Hub
             d_vh = dist_matrix[v, 0]
             cost_return = d_vh + (alpha * d_vh * load) ** beta
             total_trip_cost = cost_accum + cost_return
             
             # Optimal split
             best_k = 1
-            if beta > 1.0 and i == j: # Single city trip
+            if beta > 1.0 and i == j:
                 k, k_cost = optimal_k(d_vh, gold[v], alpha, beta)
                 if k > 1 and k_cost < total_trip_cost:
                     total_trip_cost = k_cost
@@ -209,7 +209,7 @@ class Solver:
         self.cities = np.arange(1, n_nodes, dtype=np.int32)
         self.gold = np.array([self.graph.nodes[i].get('gold', 0) for i in range(n_nodes)])
         
-        # Pre-calculation of the distance matrix using Dijkstra
+        # Precalculation of the distance matrix using Dijkstra
         adj_matrix = nx.to_scipy_sparse_array(self.graph, weight='dist')
         self.dist_matrix = csgraph.shortest_path(adj_matrix, directed=False)
 
@@ -275,8 +275,8 @@ class Solver:
                 batches = [parent_pairs[i:i + batch_size] for i in range(0, len(parent_pairs), batch_size)]
                 
                 # Evaluate offspring
-                results_nested = pool.map(worker_batch, batches)
-                offspring = [item for sublist in results_nested for item in sublist]
+                offspring_batches = pool.map(worker_batch, batches)
+                offspring = [item for sublist in offspring_batches for item in sublist]
                 
                 # Select best
                 pop = sorted(pop + offspring, key=lambda x: x[0])[:self.pop_size]
