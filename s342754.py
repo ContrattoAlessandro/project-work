@@ -12,7 +12,7 @@ def solution(p: Problem):
     n_nodes = g.number_of_nodes()
     gold_amounts = np.array([g.nodes[i].get('gold', 0.0) for i in range(n_nodes)])
     
-    # Pre-compute shortest paths
+    # Precompute shortest paths
     shortest_paths = dict(nx.all_pairs_dijkstra_path(g, weight='dist'))
     
     path = [(0, 0)]
@@ -39,7 +39,7 @@ def solution(p: Problem):
             
             # Add each intermediate node (skip the first as it's already in the path)
             for node in actual_path[1:]:
-                # Only collect gold at the actual destination cities in the segment, not at intermediate routing nodes
+                # Only collect gold at the actual destination cities in the segment
                 if node == dst and node != 0:
                     amount_collected = gold_amounts[node] * gold_fraction
                 else:
